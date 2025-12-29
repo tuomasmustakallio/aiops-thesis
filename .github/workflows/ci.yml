@@ -135,13 +135,13 @@ jobs:
           echo "---" | tee -a deploy.log
 
       - name: Login to Azure
-        if: ${{ secrets.AZURE_CREDENTIALS != '' }}
+        if: vars.ACR_LOGIN_SERVER != ''
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Login to ACR
-        if: ${{ secrets.AZURE_CREDENTIALS != '' && vars.ACR_LOGIN_SERVER != '' }}
+        if: vars.ACR_LOGIN_SERVER != ''
         run: |
           echo "Logging in to ACR: ${{ vars.ACR_LOGIN_SERVER }}" | tee -a deploy.log
           az acr login --name ${{ vars.ACR_NAME }} 2>&1 | tee -a deploy.log
@@ -152,7 +152,7 @@ jobs:
           docker build -t thesis-app:${{ github.sha }} -f Dockerfile . 2>&1 | tee -a deploy.log
 
       - name: Tag and push to ACR
-        if: ${{ secrets.AZURE_CREDENTIALS != '' && vars.ACR_LOGIN_SERVER != '' }}
+        if: vars.ACR_LOGIN_SERVER != ''
         run: |
           echo "Tagging image for ACR..." | tee -a deploy.log
           docker tag thesis-app:${{ github.sha }} ${{ vars.ACR_LOGIN_SERVER }}/thesis-app:${{ github.sha }}
@@ -163,7 +163,7 @@ jobs:
           docker push ${{ vars.ACR_LOGIN_SERVER }}/thesis-app:latest 2>&1 | tee -a deploy.log
 
       - name: Deploy to Azure Web App
-        if: ${{ secrets.AZURE_CREDENTIALS != '' && vars.AZURE_WEBAPP_NAME != '' }}
+        if: vars.AZURE_WEBAPP_NAME != ''
         run: |
           echo "Deploying to Web App: ${{ vars.AZURE_WEBAPP_NAME }}" | tee -a deploy.log
 
@@ -183,17 +183,17 @@ jobs:
           echo "Deployment complete." | tee -a deploy.log
           echo "App URL: https://${{ vars.AZURE_WEBAPP_NAME }}.azurewebsites.net" | tee -a deploy.log
 
-      - name: Deployment skipped (no Azure credentials)
-        if: ${{ secrets.AZURE_CREDENTIALS == '' }}
+      - name: Deployment skipped (not configured)
+        if: vars.ACR_LOGIN_SERVER == ''
         run: |
-          echo "NOTICE: Azure deployment skipped - AZURE_CREDENTIALS not configured" | tee -a deploy.log
+          echo "NOTICE: Azure deployment skipped - not configured" | tee -a deploy.log
           echo "" | tee -a deploy.log
           echo "To enable deployment, configure:" | tee -a deploy.log
           echo "  Secret:    AZURE_CREDENTIALS (service principal JSON)" | tee -a deploy.log
           echo "  Variables: ACR_LOGIN_SERVER, ACR_NAME, AZURE_WEBAPP_NAME, AZURE_RG" | tee -a deploy.log
 
       - name: Azure logout
-        if: ${{ always() && secrets.AZURE_CREDENTIALS != '' }}
+        if: always() && vars.ACR_LOGIN_SERVER != ''
         run: |
           az logout 2>/dev/null || true
           az cache purge 2>/dev/null || true
