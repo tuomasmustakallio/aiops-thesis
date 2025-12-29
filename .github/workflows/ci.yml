@@ -1,0 +1,214 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, 'feature/**', 'experiment/**']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '20'
+
+jobs:
+  backend:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          echo "Dependencies installed successfully"
+        2>&1 | tee install.log
+
+      - name: Run tests
+        run: |
+          pytest -v --tb=short 2>&1 | tee pytest.log
+          echo "Exit code: $?" >> pytest.log
+
+      - name: Collect logs
+        if: always()
+        run: |
+          mkdir -p ../artifacts/backend-logs
+          cp *.log ../artifacts/backend-logs/ 2>/dev/null || true
+          echo "Run ID: ${{ github.run_id }}" > ../artifacts/backend-logs/run-info.txt
+          echo "Commit: ${{ github.sha }}" >> ../artifacts/backend-logs/run-info.txt
+          echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ../artifacts/backend-logs/run-info.txt
+
+      - name: Upload backend logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-logs-${{ github.run_id }}
+          path: artifacts/backend-logs/
+          retention-days: 90
+
+  frontend:
+    name: Frontend Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm ci 2>&1 | tee install.log || npm install 2>&1 | tee install.log
+          echo "Dependencies installed successfully"
+
+      - name: Build frontend
+        run: |
+          npm run build 2>&1 | tee build.log
+          echo "Exit code: $?" >> build.log
+
+      - name: Collect logs
+        if: always()
+        run: |
+          mkdir -p ../artifacts/frontend-logs
+          cp *.log ../artifacts/frontend-logs/ 2>/dev/null || true
+          echo "Run ID: ${{ github.run_id }}" > ../artifacts/frontend-logs/run-info.txt
+          echo "Commit: ${{ github.sha }}" >> ../artifacts/frontend-logs/run-info.txt
+          echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ../artifacts/frontend-logs/run-info.txt
+
+      - name: Upload frontend logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-logs-${{ github.run_id }}
+          path: artifacts/frontend-logs/
+          retention-days: 90
+
+      - name: Upload build output
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build-${{ github.run_id }}
+          path: frontend/dist/
+          retention-days: 7
+
+  deploy:
+    name: Deploy to Azure
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download frontend build
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-build-${{ github.run_id }}
+          path: backend/static/
+
+      - name: Initialize deploy log
+        run: |
+          echo "Deploy started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" | tee deploy.log
+          echo "Commit: ${{ github.sha }}" | tee -a deploy.log
+          echo "Run ID: ${{ github.run_id }}" | tee -a deploy.log
+          echo "---" | tee -a deploy.log
+
+      - name: Login to Azure
+        if: ${{ secrets.AZURE_CREDENTIALS != '' }}
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Login to ACR
+        if: ${{ secrets.AZURE_CREDENTIALS != '' && vars.ACR_LOGIN_SERVER != '' }}
+        run: |
+          echo "Logging in to ACR: ${{ vars.ACR_LOGIN_SERVER }}" | tee -a deploy.log
+          az acr login --name ${{ vars.ACR_NAME }} 2>&1 | tee -a deploy.log
+
+      - name: Build Docker image
+        run: |
+          echo "Building Docker image..." | tee -a deploy.log
+          docker build -t thesis-app:${{ github.sha }} -f Dockerfile . 2>&1 | tee -a deploy.log
+
+      - name: Tag and push to ACR
+        if: ${{ secrets.AZURE_CREDENTIALS != '' && vars.ACR_LOGIN_SERVER != '' }}
+        run: |
+          echo "Tagging image for ACR..." | tee -a deploy.log
+          docker tag thesis-app:${{ github.sha }} ${{ vars.ACR_LOGIN_SERVER }}/thesis-app:${{ github.sha }}
+          docker tag thesis-app:${{ github.sha }} ${{ vars.ACR_LOGIN_SERVER }}/thesis-app:latest
+
+          echo "Pushing to ACR..." | tee -a deploy.log
+          docker push ${{ vars.ACR_LOGIN_SERVER }}/thesis-app:${{ github.sha }} 2>&1 | tee -a deploy.log
+          docker push ${{ vars.ACR_LOGIN_SERVER }}/thesis-app:latest 2>&1 | tee -a deploy.log
+
+      - name: Deploy to Azure Web App
+        if: ${{ secrets.AZURE_CREDENTIALS != '' && vars.AZURE_WEBAPP_NAME != '' }}
+        run: |
+          echo "Deploying to Web App: ${{ vars.AZURE_WEBAPP_NAME }}" | tee -a deploy.log
+
+          az webapp config container set \
+            --resource-group ${{ vars.AZURE_RG }} \
+            --name ${{ vars.AZURE_WEBAPP_NAME }} \
+            --docker-custom-image-name ${{ vars.ACR_LOGIN_SERVER }}/thesis-app:${{ github.sha }} \
+            --docker-registry-server-url https://${{ vars.ACR_LOGIN_SERVER }} \
+            2>&1 | tee -a deploy.log
+
+          echo "Restarting Web App..." | tee -a deploy.log
+          az webapp restart \
+            --resource-group ${{ vars.AZURE_RG }} \
+            --name ${{ vars.AZURE_WEBAPP_NAME }} \
+            2>&1 | tee -a deploy.log
+
+          echo "Deployment complete." | tee -a deploy.log
+          echo "App URL: https://${{ vars.AZURE_WEBAPP_NAME }}.azurewebsites.net" | tee -a deploy.log
+
+      - name: Deployment skipped (no Azure credentials)
+        if: ${{ secrets.AZURE_CREDENTIALS == '' }}
+        run: |
+          echo "NOTICE: Azure deployment skipped - AZURE_CREDENTIALS not configured" | tee -a deploy.log
+          echo "" | tee -a deploy.log
+          echo "To enable deployment, configure:" | tee -a deploy.log
+          echo "  Secret:    AZURE_CREDENTIALS (service principal JSON)" | tee -a deploy.log
+          echo "  Variables: ACR_LOGIN_SERVER, ACR_NAME, AZURE_WEBAPP_NAME, AZURE_RG" | tee -a deploy.log
+
+      - name: Azure logout
+        if: ${{ always() && secrets.AZURE_CREDENTIALS != '' }}
+        run: |
+          az logout 2>/dev/null || true
+          az cache purge 2>/dev/null || true
+
+      - name: Collect deploy logs
+        if: always()
+        run: |
+          mkdir -p artifacts/deploy-logs
+          cp deploy.log artifacts/deploy-logs/ 2>/dev/null || echo "No deploy.log" > artifacts/deploy-logs/deploy.log
+          echo "Run ID: ${{ github.run_id }}" > artifacts/deploy-logs/run-info.txt
+          echo "Commit: ${{ github.sha }}" >> artifacts/deploy-logs/run-info.txt
+          echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> artifacts/deploy-logs/run-info.txt
+
+      - name: Upload deploy logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-logs-${{ github.run_id }}
+          path: artifacts/deploy-logs/
+          retention-days: 90
