@@ -6,6 +6,15 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      run_deploy:
+        description: 'Run deploy job (for testing deploy failures)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 env:
   PYTHON_VERSION: '3.11'
@@ -51,6 +60,9 @@ jobs:
           echo "Run ID: ${{ github.run_id }}" > ../artifacts/backend-logs/run-info.txt
           echo "Commit: ${{ github.sha }}" >> ../artifacts/backend-logs/run-info.txt
           echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ../artifacts/backend-logs/run-info.txt
+          echo "Branch: ${{ github.ref_name }}" >> ../artifacts/backend-logs/run-info.txt
+          RUN_MARKER=$(grep -oP 'RUN_MARKER=\K\d+' ../experiments/run_marker.txt 2>/dev/null || echo "0")
+          echo "RUN_MARKER: $RUN_MARKER" >> ../artifacts/backend-logs/run-info.txt
 
       - name: Upload backend logs
         if: always()
@@ -95,6 +107,9 @@ jobs:
           echo "Run ID: ${{ github.run_id }}" > ../artifacts/frontend-logs/run-info.txt
           echo "Commit: ${{ github.sha }}" >> ../artifacts/frontend-logs/run-info.txt
           echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> ../artifacts/frontend-logs/run-info.txt
+          echo "Branch: ${{ github.ref_name }}" >> ../artifacts/frontend-logs/run-info.txt
+          RUN_MARKER=$(grep -oP 'RUN_MARKER=\K\d+' ../experiments/run_marker.txt 2>/dev/null || echo "0")
+          echo "RUN_MARKER: $RUN_MARKER" >> ../artifacts/frontend-logs/run-info.txt
 
       - name: Upload frontend logs
         if: always()
@@ -116,7 +131,7 @@ jobs:
     name: Deploy to Azure
     runs-on: ubuntu-latest
     needs: [backend, frontend]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: (github.ref == 'refs/heads/main' && github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && github.event.inputs.run_deploy == 'true')
 
     steps:
       - uses: actions/checkout@v4
@@ -206,6 +221,9 @@ jobs:
           echo "Run ID: ${{ github.run_id }}" > artifacts/deploy-logs/run-info.txt
           echo "Commit: ${{ github.sha }}" >> artifacts/deploy-logs/run-info.txt
           echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> artifacts/deploy-logs/run-info.txt
+          echo "Branch: ${{ github.ref_name }}" >> artifacts/deploy-logs/run-info.txt
+          RUN_MARKER=$(grep -oP 'RUN_MARKER=\K\d+' experiments/run_marker.txt 2>/dev/null || echo "0")
+          echo "RUN_MARKER: $RUN_MARKER" >> artifacts/deploy-logs/run-info.txt
 
       - name: Upload deploy logs
         if: always()

@@ -1,0 +1,6 @@
+# EXPERIMENT FAILURE FILE
+#
+# Append this line to backend/requirements.txt to cause a dependency failure.
+# This is used on the experiment/dep-fail branch.
+
+nonexistent-package-that-does-not-exist-xyz==99.99.99
