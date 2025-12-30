@@ -2,3 +2,9 @@ fastapi>=0.104.0
 uvicorn[standard]>=0.24.0
 pytest>=7.4.0
 httpx>=0.25.0
+# EXPERIMENT FAILURE FILE
+#
+# Append this line to backend/requirements.txt to cause a dependency failure.
+# This is used on the experiment/dep-fail branch.
+
+nonexistent-package-that-does-not-exist-xyz==99.99.99
