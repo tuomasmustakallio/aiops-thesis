@@ -15,3 +15,9 @@ COPY backend/ .
 EXPOSE 8000
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# EXPERIMENT FAILURE FILE
+#
+# Append this line to the Dockerfile to cause a deployment (Docker build) failure.
+# This is used on the experiment/deploy-fail branch.
+
+RUN echo "EXPERIMENT: Intentional Docker build failure" && exit 1
