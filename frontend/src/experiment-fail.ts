@@ -1,12 +1,11 @@
 /**
- * Experiment module placeholder.
+ * EXPERIMENT FAILURE FILE
  *
- * On the experiment/frontend-fail branch, this file is replaced with
- * a version that contains a TypeScript compilation error.
- *
- * See: experiments/failure-toggles/frontend-fail.ts
+ * Copy this file to frontend/src/experiment-fail.ts to cause a TypeScript error.
+ * This is used on the experiment/frontend-fail branch.
  */
 
-const experimentStatus = { ok: true };
+// This line causes a TypeScript compilation error
+const experimentFailure: number = "this is not a number";
 
-export default experimentStatus;
+export default experimentFailure;
