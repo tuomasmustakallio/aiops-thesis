@@ -1,12 +1,12 @@
-"""Experiment test placeholder.
-
-On the experiment/backend-fail branch, this file is replaced with
-a version that contains a failing test.
-
-See: experiments/failure-toggles/backend-fail.py
 """
+EXPERIMENT FAILURE FILE
+
+Copy this file to backend/tests/test_experiment_fail.py to cause a test failure.
+This is used on the experiment/backend-fail branch.
+"""
+import pytest
 
 
-def test_experiment_placeholder():
-    """Placeholder test - always passes on main branch."""
-    assert True
+def test_experiment_backend_failure():
+    """Intentional test failure for experiment dataset collection."""
+    assert False, "EXPERIMENT: Intentional backend test failure for dataset collection"
