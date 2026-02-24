@@ -1,0 +1,1253 @@
+{
+    "took": 2,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 60,
+            "relation": "eq"
+        },
+        "max_score": null,
+        "hits": [
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MsII3kfNdndtDWiU5yObP7cAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 1,
+                    "run_id": "20596576671",
+                    "log_lines": 289,
+                    "error_lines": 2,
+                    "info_lines": 286,
+                    "ml": {
+                        "outlier_score": 0.9950622916221619,
+                        "feature_influence": [
+                            {
+                                "feature_name": "error_lines",
+                                "influence": 0.21134009957313538
+                            },
+                            {
+                                "feature_name": "info_lines",
+                                "influence": 0.1795869767665863
+                            },
+                            {
+                                "feature_name": "log_lines",
+                                "influence": 0.1734311729669571
+                            },
+                            {
+                                "feature_name": "unique_files",
+                                "influence": 0.2642287611961365
+                            },
+                            {
+                                "feature_name": "warn_lines",
+                                "influence": 0.17141300439834595
+                            }
+                        ]
+                    }
+                },
+                "sort": [
+                    0.9950622916221619
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MgRFqF-FMaIEaq7V5HQ0szoAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 1,
+                    "run_id": "20596575942",
+                    "log_lines": 295,
+                    "error_lines": 2,
+                    "info_lines": 292,
+                    "ml": {
+                        "outlier_score": 0.9943995475769043,
+                        "feature_influence": [
+                            {
+                                "feature_name": "error_lines",
+                                "influence": 0.3371533155441284
+                            },
+                            {
+                                "feature_name": "info_lines",
+                                "influence": 0.12504072487354279
+                            },
+                            {
+                                "feature_name": "log_lines",
+                                "influence": 0.11098788678646088
+                            },
+                            {
+                                "feature_name": "unique_files",
+                                "influence": 0.20503471791744232
+                            },
+                            {
+                                "feature_name": "warn_lines",
+                                "influence": 0.2217833399772644
+                            }
+                        ]
+                    }
+                },
+                "sort": [
+                    0.9943995475769043
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mm4DYhtaLme8eNnw6hBH3wAAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 4,
+                    "run_id": "20596161099",
+                    "log_lines": 361,
+                    "error_lines": 0,
+                    "info_lines": 357,
+                    "ml": {
+                        "outlier_score": 0.9447891712188721,
+                        "feature_influence": [
+                            {
+                                "feature_name": "error_lines",
+                                "influence": 0.09621275961399078
+                            },
+                            {
+                                "feature_name": "info_lines",
+                                "influence": 0.3117961287498474
+                            },
+                            {
+                                "feature_name": "log_lines",
+                                "influence": 0.4158027172088623
+                            },
+                            {
+                                "feature_name": "unique_files",
+                                "influence": 0.026726441457867622
+                            },
+                            {
+                                "feature_name": "warn_lines",
+                                "influence": 0.14946195483207703
+                            }
+                        ]
+                    }
+                },
+                "sort": [
+                    0.9447891712188721
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mq9iafFnYSId98FDt_rDsmcAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 4,
+                    "run_id": "20596223801",
+                    "log_lines": 357,
+                    "error_lines": 0,
+                    "info_lines": 353,
+                    "ml": {
+                        "outlier_score": 0.9429131150245667,
+                        "feature_influence": [
+                            {
+                                "feature_name": "error_lines",
+                                "influence": 0.17608214914798737
+                            },
+                            {
+                                "feature_name": "info_lines",
+                                "influence": 0.4120236337184906
+                            },
+                            {
+                                "feature_name": "log_lines",
+                                "influence": 0.11929938197135925
+                            },
+                            {
+                                "feature_name": "unique_files",
+                                "influence": 0.022981610149145126
+                            },
+                            {
+                                "feature_name": "warn_lines",
+                                "influence": 0.26961323618888855
+                            }
+                        ]
+                    }
+                },
+                "sort": [
+                    0.9429131150245667
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mh0H2SW_3Z0h-PebD_LD9gcAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 4,
+                    "run_id": "20596685733",
+                    "log_lines": 359,
+                    "error_lines": 0,
+                    "info_lines": 355,
+                    "ml": {
+                        "outlier_score": 0.9425347447395325,
+                        "feature_influence": [
+                            {
+                                "feature_name": "error_lines",
+                                "influence": 0.1437145620584488
+                            },
+                            {
+                                "feature_name": "info_lines",
+                                "influence": 0.13511022925376892
+                            },
+                            {
+                                "feature_name": "log_lines",
+                                "influence": 0.37137141823768616
+                            },
+                            {
+                                "feature_name": "unique_files",
+                                "influence": 0.06789970397949219
+                            },
+                            {
+                                "feature_name": "warn_lines",
+                                "influence": 0.28190407156944275
+                            }
+                        ]
+                    }
+                },
+                "sort": [
+                    0.9425347447395325
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MqW9vJwRzGB_cpyi-MX14ZQAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596174271",
+                    "log_lines": 117,
+                    "error_lines": 0,
+                    "info_lines": 117,
+                    "ml": {
+                        "outlier_score": 0.4213765859603882,
+                        "feature_influence": [
+                            {
+                                "feature_name": "error_lines",
+                                "influence": 0.1404777318239212
+                            },
+                            {
+                                "feature_name": "info_lines",
+                                "influence": 0.29440563917160034
+                            },
+                            {
+                                "feature_name": "log_lines",
+                                "influence": 0.29977917671203613
+                            },
+                            {
+                                "feature_name": "unique_files",
+                                "influence": 0.16885237395763397
+                            },
+                            {
+                                "feature_name": "warn_lines",
+                                "influence": 0.09648509323596954
+                            }
+                        ]
+                    }
+                },
+                "sort": [
+                    0.4213765859603882
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MgxvWuaKNG-z1y0XwAgulzkAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596174287",
+                    "log_lines": 117,
+                    "error_lines": 0,
+                    "info_lines": 117,
+                    "ml": {
+                        "outlier_score": 0.4213765859603882,
+                        "feature_influence": [
+                            {
+                                "feature_name": "error_lines",
+                                "influence": 0.1404777318239212
+                            },
+                            {
+                                "feature_name": "info_lines",
+                                "influence": 0.29440563917160034
+                            },
+                            {
+                                "feature_name": "log_lines",
+                                "influence": 0.29977917671203613
+                            },
+                            {
+                                "feature_name": "unique_files",
+                                "influence": 0.16885237395763397
+                            },
+                            {
+                                "feature_name": "warn_lines",
+                                "influence": 0.09648509323596954
+                            }
+                        ]
+                    }
+                },
+                "sort": [
+                    0.4213765859603882
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MoMmQ2y3ZlZ48t83jwRxfRIAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596174265",
+                    "log_lines": 126,
+                    "error_lines": 4,
+                    "info_lines": 122,
+                    "ml": {
+                        "outlier_score": 0.052016276866197586
+                    }
+                },
+                "sort": [
+                    0.052016276866197586
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mr1vevh3YNfZ1nLXJ1daEZgAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596174277",
+                    "log_lines": 109,
+                    "error_lines": 1,
+                    "info_lines": 108,
+                    "ml": {
+                        "outlier_score": 0.052016276866197586
+                    }
+                },
+                "sort": [
+                    0.052016276866197586
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mv38PxjTiRdgYiinRJosDMMAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596174267",
+                    "log_lines": 30,
+                    "error_lines": 2,
+                    "info_lines": 28,
+                    "ml": {
+                        "outlier_score": 0.044766295701265335
+                    }
+                },
+                "sort": [
+                    0.044766295701265335
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Moze_5qIt3dljVDI4nEKgzAAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596239078",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mp-mgzY9B4tyWaP2PTCJfCIAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596239093",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MmzshYI0lVuX-xRggNdjRY4AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596239095",
+                    "log_lines": 124,
+                    "error_lines": 4,
+                    "info_lines": 120,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MmBmqSJZ1gT7XeCUUn-eHHoAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596239103",
+                    "log_lines": 107,
+                    "error_lines": 1,
+                    "info_lines": 106,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MpYK4slg3Y0b19PJFCWKMXIAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596239123",
+                    "log_lines": 29,
+                    "error_lines": 2,
+                    "info_lines": 27,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mrqy5tBOC04lEbs_2hcr-MAAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596277175",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MjOXSyIrGZn8mWhgg7Z5VZEAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596277183",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mnb_H0O0E3MeBrerR4HHge4AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596277426",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mt1dZ43Eh3B6_7tDJgXI54kAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596277595",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MuSQ5rqSWgVFuWBWNY4AyowAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596278056",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MnCn9OuL2QrIXBRZmE5canYAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596278295",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MlQhd4imuCB1c7_TkUYPFy8AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596278469",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MjsuaqBsSJXrpkBZ60uitHAAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596278789",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MuEM6B2mUIxKeA4Rm_59818AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596279201",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MmPjHUxa3LB_ZX00Iy2vMu4AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596279492",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MhExR_pJoV68LRYn82pgKGMAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596279793",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MrvX2NZcLaIHPUcbQ2N8KQQAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596279962",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MldFGVLtGVQRg87hTEnI2FoAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596280318",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MhGv8cdzhROBB_zFDpxd91MAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596280694",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mnytq3HDJuKKX-RwkU4HIUsAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596280909",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MvSd6RtOZQ6lc2B--puV6xAAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596281262",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MocAJOR0GrNEr481Mp7ZaGUAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596281436",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MndD8j5l3e_BG4swjKoiqpcAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596281653",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MkhH-KH-_z5-Pl4Ig-xFcMAAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596282006",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MnvgM1O_xUmwCL-Ul4ZABRUAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596282225",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MvyMo43PSWvEdOttk5tA2csAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596282431",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MlsyNeHcD4cqnAYS_okh2wAAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596282762",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MiM-TP-2qWd7gJrz6fXvoAAAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596283005",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mqxa_V2g2_q6ttGt_YTD-QAAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596283106",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MiM6CIPuwUnaedaF97-pgioAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596283408",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mu5KU1gJAQpT72bJMa2OeP8AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596283825",
+                    "log_lines": 124,
+                    "error_lines": 4,
+                    "info_lines": 120,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mo2DOT4IsiQCHEzYOYxwXJkAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596284125",
+                    "log_lines": 124,
+                    "error_lines": 4,
+                    "info_lines": 120,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mm7sYYndAQ6tyfw8LknvW_8AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596284607",
+                    "log_lines": 124,
+                    "error_lines": 4,
+                    "info_lines": 120,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MoReqX00uD_f-_hz4O0J0TEAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596284609",
+                    "log_lines": 124,
+                    "error_lines": 4,
+                    "info_lines": 120,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mgk3JxJtF3o4kuW5V_JavvUAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596284906",
+                    "log_lines": 124,
+                    "error_lines": 4,
+                    "info_lines": 120,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MqQaUUdy-KpZMaAIyba-UIgAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596285333",
+                    "log_lines": 124,
+                    "error_lines": 4,
+                    "info_lines": 120,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mn_ANksM0uRHrb294VK1pJoAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596285748",
+                    "log_lines": 107,
+                    "error_lines": 1,
+                    "info_lines": 106,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MlrSWS_ZCCu15D98-qo66d4AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596286056",
+                    "log_lines": 107,
+                    "error_lines": 1,
+                    "info_lines": 106,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mkah4DuaU4wwwMAFYbpLc3MAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596286291",
+                    "log_lines": 107,
+                    "error_lines": 1,
+                    "info_lines": 106,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MvAimzfCabbzF_Am8jYcnD4AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596286619",
+                    "log_lines": 107,
+                    "error_lines": 1,
+                    "info_lines": 106,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MoaqONlp_AnOy-25U0oOQAUAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596286992",
+                    "log_lines": 107,
+                    "error_lines": 1,
+                    "info_lines": 106,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MuKvZ_h3smtZlo2WOpyGBd0AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596287099",
+                    "log_lines": 107,
+                    "error_lines": 1,
+                    "info_lines": 106,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MoVIU9wO_iJTRqmnq5UHh0AAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596287608",
+                    "log_lines": 29,
+                    "error_lines": 2,
+                    "info_lines": 27,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mr4wkFOp0BQiEZXkbbPBr7MAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596287950",
+                    "log_lines": 29,
+                    "error_lines": 2,
+                    "info_lines": 27,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MkWWZu00_tdi6H44EpONO88AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596288301",
+                    "log_lines": 29,
+                    "error_lines": 2,
+                    "info_lines": 27,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mofp9HkQRZoLFBCd-akgEB0AAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596288581",
+                    "log_lines": 29,
+                    "error_lines": 2,
+                    "info_lines": 27,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "MtXMcE7FyVXNpZ051xCH90IAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596288765",
+                    "log_lines": 29,
+                    "error_lines": 2,
+                    "info_lines": 27,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Ml-I3G25qF8B_eXafP6gTZAAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596289025",
+                    "log_lines": 29,
+                    "error_lines": 2,
+                    "info_lines": 27,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mr2CnKC5uy9wK2LjbQwZXmQAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596289580",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            },
+            {
+                "_index": "cicd-run-outliers",
+                "_id": "Mk4frViQGFTd_nV00amm94UAAAAAAAAA",
+                "_score": null,
+                "_source": {
+                    "warn_lines": 0,
+                    "run_id": "20596289891",
+                    "log_lines": 115,
+                    "error_lines": 0,
+                    "info_lines": 115,
+                    "ml": {
+                        "outlier_score": 0.03764874115586281
+                    }
+                },
+                "sort": [
+                    0.03764874115586281
+                ]
+            }
+        ]
+    }
+}

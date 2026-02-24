@@ -1,12 +1,13 @@
 # Requirements for evaluation scripts
-# Note: logai has specific dependencies that may need manual installation
 
 # Core dependencies
 pandas>=2.0.0
 
-# LogAI (uncomment when ready to use)
-# logai>=0.1.0
+# LogAI - log anomaly detection toolkit (Salesforce)
+# Requires Python 3.10 -- known issues with 3.11+ (numba, dataclass compat)
+# Install in a separate venv if your default Python is 3.11+
+# After install: python -m nltk.downloader punkt
+logai>=0.1.5
 
-# Optional: for advanced analysis
-# scikit-learn>=1.3.0
-# matplotlib>=3.7.0
+# Elasticsearch client - log ingestion for Elastic Observability
+elasticsearch>=8.0.0

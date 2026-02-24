@@ -2,6 +2,12 @@
 CLAUDE.md
 WORKFLOW.md
 
+# Evaluation/research temporary files
+EVALUATION_PLAN.md
+deep-research-*.md
+chapter_*.md
+*.pdf
+
 # Python
 __pycache__/
 *.py[cod]
@@ -10,6 +16,7 @@ __pycache__/
 .Python
 venv/
 .venv/
+.venv-logai/
 env/
 .env
 *.egg-info/

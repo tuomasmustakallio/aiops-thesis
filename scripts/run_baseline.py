@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
-"""Run LogAI anomaly detection on normalized CI logs.
+"""Run baseline keyword heuristic anomaly detection.
 
-Outputs anomaly scores per run to results/logai_scores.csv.
+Simple baseline that counts ERROR keywords in logs.
+Used for comparison against LogAI approach.
 
-Requires: logai package (pip install logai)
+Outputs anomaly scores per run to results/baseline_scores.csv.
 """
 import argparse
 import csv
 from pathlib import Path
-
-# TODO: Import LogAI components once installed
-# from logai.algorithms.anomaly_detection_algo import AnomalyDetectionConfig
-# from logai.analysis.anomaly_detector import AnomalyDetector
 
 
 def load_logs_for_run(run_dir: Path) -> list[str]:
@@ -19,31 +16,35 @@ def load_logs_for_run(run_dir: Path) -> list[str]:
     lines = []
     for log_file in run_dir.rglob('*.log'):
         with open(log_file, 'r') as f:
-            lines.extend(f.readlines())
+            lines.extend(line.strip() for line in f if line.strip())
     return lines
 
 
-def compute_anomaly_score(logs: list[str]) -> float:
-    """Compute anomaly score using LogAI.
+def compute_baseline_score(logs: list[str]) -> float:
+    """Compute anomaly score using ERROR keyword heuristic.
 
-    TODO: Implement actual LogAI integration.
-    Current placeholder returns a dummy score based on error count.
+    Higher error ratio = higher anomaly score.
     """
-    # Placeholder implementation
-    error_count = sum(1 for line in logs if line.startswith('ERROR'))
-    total = len(logs) if logs else 1
+    if not logs:
+        return 0.0
 
-    # Dummy score: higher error ratio = higher anomaly score
+    error_count = sum(1 for line in logs if 'ERROR' in line.upper())
+    total = len(logs)
+
+    # Score: higher error ratio = higher anomaly score
+    # Scale by 10 and cap at 1.0
     score = min(1.0, error_count / total * 10)
-
     return score
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Run LogAI anomaly detection")
-    parser.add_argument("--input", default="artifacts/normalized", help="Normalized logs directory")
-    parser.add_argument("--output", default="results/logai_scores.csv", help="Output CSV path")
-    parser.add_argument("--threshold", type=float, default=0.5, help="Anomaly threshold")
+    parser = argparse.ArgumentParser(description="Run baseline keyword detection")
+    parser.add_argument("--input", default="artifacts/normalized",
+                        help="Normalized logs directory")
+    parser.add_argument("--output", default="results/baseline_scores.csv",
+                        help="Output CSV path")
+    parser.add_argument("--threshold", type=float, default=0.5,
+                        help="Anomaly threshold")
     args = parser.parse_args()
 
     input_dir = Path(args.input)
@@ -58,7 +59,7 @@ def main():
             print(f"Processing run {run_id}...")
 
             logs = load_logs_for_run(run_dir)
-            score = compute_anomaly_score(logs)
+            score = compute_baseline_score(logs)
             predicted_anomaly = score >= args.threshold
 
             results.append({
@@ -76,6 +77,8 @@ def main():
         writer.writerows(results)
 
     print(f"\nResults written to {output_path}")
+    print(f"Total runs: {len(results)}")
+    print(f"Predicted anomalies: {sum(1 for r in results if r['predicted_anomaly'])}")
 
 
 if __name__ == "__main__":
