@@ -66,7 +66,8 @@ def load_ground_truth(path: Path) -> dict[str, dict]:
 
 
 def build_log_entries(input_dir: Path, metadata: dict,
-                      run_id_filter: list[str] | None = None) -> list[dict]:
+                      run_id_filter: list[str] | None = None,
+                      use_current_time: bool = False) -> list[dict]:
     """Build Dynatrace log entry objects from normalized logs.
 
     Each log line becomes one entry with:
@@ -77,11 +78,15 @@ def build_log_entries(input_dir: Path, metadata: dict,
 
     NOTE: outcome and failure_class are excluded from ingestion to avoid
     leaking ground truth to the tool.
+
+    If use_current_time=True, all timestamps are set to now (useful for
+    testing with old logs that would be rejected by the 24h age limit).
     """
     entries = []
     now = datetime.now(timezone.utc)
     cutoff = now - timedelta(hours=LOG_AGE_LIMIT_HOURS)
     skipped_old = 0
+    run_index = 0
 
     for run_dir in sorted(input_dir.iterdir()):
         if not run_dir.is_dir():
@@ -95,14 +100,18 @@ def build_log_entries(input_dir: Path, metadata: dict,
         run_meta = metadata.get(run_id, {})
 
         # Parse base timestamp or use current time
-        base_ts_str = run_meta.get("timestamp", "")
-        try:
-            base_ts = datetime.fromisoformat(base_ts_str.replace("Z", "+00:00"))
-        except (ValueError, AttributeError):
-            base_ts = now - timedelta(minutes=30)  # Recent default
+        if use_current_time:
+            base_ts = now
+            run_index += 1
+        else:
+            base_ts_str = run_meta.get("timestamp", "")
+            try:
+                base_ts = datetime.fromisoformat(base_ts_str.replace("Z", "+00:00"))
+            except (ValueError, AttributeError):
+                base_ts = now - timedelta(minutes=10)  # Recent default
 
-        # Check age limit
-        if base_ts < cutoff:
+        # Check age limit (skip if not using current_time and too old)
+        if not use_current_time and base_ts < cutoff:
             print(f"  WARNING: Run {run_id} timestamp {base_ts.isoformat()} "
                   f"is older than 24h, skipping")
             skipped_old += 1
@@ -260,6 +269,10 @@ def main():
         help="Only ingest specific run IDs (space-separated)",
     )
     parser.add_argument(
+        "--use-current-time", action="store_true",
+        help="Use current timestamp for all logs (useful for testing old logs that would be rejected by 24h age limit)",
+    )
+    parser.add_argument(
         "--no-verify-ssl", action="store_true",
         help="Disable SSL certificate verification",
     )
@@ -298,7 +311,9 @@ def main():
         sys.exit(1)
 
     print(f"\nBuilding log entries from {input_dir} …")
-    entries = build_log_entries(input_dir, metadata, args.run_ids)
+    if args.use_current_time:
+        print("  (using current timestamp for all logs)")
+    entries = build_log_entries(input_dir, metadata, args.run_ids, args.use_current_time)
 
     if not entries:
         print("ERROR: No log entries to ingest.")
