@@ -301,14 +301,6 @@ python3 scripts/compute_metrics.py --tool all --ground-truth data/runs.csv
 3. **Elastic requires significant tuning** but guarantees failure detection
 4. **No single tool is universally best** - tradeoffs depend on operational priorities
 5. **Tool architecture matters** - time-series vs. raw logs, ML vs. heuristics
-
-## Next Steps
-
-1. **For thesis writing**: Reference the per-tool docs for detailed technical sections
-2. **For future extensions**: Generate more runs, evaluate additional tools, extend baseline heuristics
-3. **For reproducibility**: Follow the Reproducibility Guide above
-4. **For deep dives**: See individual tool evaluation docs and inline code comments
-
 ---
 
 *This repository serves as a complete audit trail of the evaluation process: ground truth tracking, reproducible scripts, detailed documentation, and transparent results.*
