@@ -6,18 +6,19 @@ Master's thesis evaluating AI-enabled observability tools for detecting CI/CD pi
 
 Three AI tools evaluated on 47 labeled pipeline runs (27 success, 20 failures):
 
-| Tool | Precision | Recall | F1 Score | Integration Effort |
-|------|-----------|--------|----------|-------------------|
-| **Dynatrace Davis AI** | 1.000 | 1.000 | 1.000 | Medium |
-| **LogAI** | 0.778 | 0.778 | 0.778 | Low |
-| **Elastic Observability** | 0.182 | 1.0 | 0.182 | High |
+| Tool | TP | FP | TN | FN | Precision | Recall | F1 Score |
+|------|----|----|----|----|-----------|--------|----------|
+| **Dynatrace Davis AI** | 20 | 0 | 27 | 0 | 1.000 | 1.000 | 1.000 |
+| **LogAI** | 14 | 2 | 25 | 6 | 0.875 | 0.700 | 0.778 |
+| **Elastic Observability** | 2 | 0 | 27 | 18 | 1.000 | 0.100 | 0.182 |
+| **Baseline** (ERROR keyword) | 6 | 0 | 27 | 14 | 1.000 | 0.300 | 0.462 |
 
 ## Project Overview
 
 This repository contains:
 
 1. **Reproducible CI/CD Experiment Environment** - GitHub Actions workflow with controlled failure injection
-2. **Web Application** - Backend API (Python/Flask) + Frontend (TypeScript/React) deployed to Azure
+2. **Web Application** - Backend API (Python/FastAPI) + Frontend (TypeScript/React) deployed to Azure
 3. **Ground Truth Dataset** - 47 manually labeled pipeline runs across 5 failure branches
 4. **Log Collection Pipeline** - Download, normalize, and prepare logs from GitHub Actions artifacts
 5. **Tool Integration** - Scripts to ingest the same dataset into LogAI, Elastic, and Dynatrace
@@ -38,7 +39,7 @@ This repository contains:
 │   ├── README.md                      # Dataset schema documentation
 │   └── runs.csv                       # Ground truth labels (47 runs)
 │
-├── backend/                           # Python Flask API
+├── backend/                           # Python FastAPI server
 │   ├── main.py                        # API server
 │   └── tests/
 │       ├── test_api.py                # API endpoint tests
@@ -77,48 +78,78 @@ This repository contains:
 
 ## Evaluation Dataset
 
-**47 Pipeline Runs** across 5 experiment branches:
+The repository contains logs from 107 CI/CD pipeline runs:
+
+- **47 labeled runs** used for evaluation (27 success, 20 failed)
+- **60 additional historical runs** present in the normalized dataset from earlier experiment development; not included in the labeled evaluation
+
+**Log counts:**
+- Total normalized log lines (all 107 runs): ~13,065
+- Normalized log lines from 47 evaluation runs: ~7,315
+
+**47 Labeled Runs** across 5 experiment branches:
 
 | Branch | Failure Class | Count | Outcome |
 |--------|---------------|-------|---------|
-| `experiment/success` | none | 25 | ✓ Success |
-| `experiment/backend-fail` | backend_test | 6 | ✗ Failure |
-| `experiment/frontend-fail` | frontend_build | 6 | ✗ Failure |
-| `experiment/dep-fail` | dependency | 6 | ✗ Failure |
-| `experiment/deploy-fail` | deploy | 2 | ✗ Failure |
-
-**Totals**: 27 success, 20 failures | **13,065 normalized log lines** ingested into each tool
+| `experiment/success` | none | 25 | Success |
+| `experiment/backend-fail` | backend_test | 6 | Failure |
+| `experiment/frontend-fail` | frontend_build | 6 | Failure |
+| `experiment/dep-fail` | dependency | 6 | Failure |
+| `experiment/deploy-fail` | deploy | 2 | Failure |
 
 **Ground truth** in `data/runs.csv` with schema: `run_id, commit_sha, timestamp, outcome, failure_class, note`
 
+### Failure Injection
+
+All 20 failures were **intentionally injected** using deterministic, minimal code changes. Each experiment branch modified only the single file required to trigger one failure type:
+
+| Failure Class | Mechanism | Change |
+|---|---|---|
+| `backend_test` | Failing pytest assertion (`assert False`) | +1 test file |
+| `frontend_build` | TypeScript compilation error | +1 source file |
+| `dependency` | Invalid pip package in `requirements.txt` | +1 line |
+| `deploy` | Invalid Dockerfile instruction | +1 line |
+
+No natural or random failures are included. The rest of the pipeline remains identical across all branches (single-cause principle).
+
+### Per-Class Detection Results
+
+| Failure Class | Total | Dynatrace | LogAI | Elastic | Baseline |
+|---|---|---|---|---|---|
+| backend_test | 6 | 6/6 | 6/6 | 0/6 | 0/6 |
+| frontend_build | 6 | 6/6 | 0/6 | 0/6 | 0/6 |
+| dependency | 6 | 6/6 | 6/6 | 0/6 | 6/6 |
+| deploy | 2 | 2/2 | 2/2 | 2/2 | 0/2 |
+| **Total** | **20** | **20/20** | **14/20** | **2/20** | **6/20** |
+
 ## Key Findings
 
-### Dynatrace Davis AI - Best Performance ⭐
+### Dynatrace Davis AI - Best Performance
 
 **Precision: 1.0 | Recall: 1.0 | F1: 1.0**
 
 - Detected all 20 failures with zero false positives
-- Per-run anomaly detection via DQL time-series queries
-- Automated event creation and lifecycle management
-- **Tradeoff**: Requires time-series aggregation; not direct log analysis
+- Per-run anomaly detection via DQL time-series queries → Davis event creation
+- **Detection method**: Due to limited historical data (single evaluation window), Dynatrace's ML-based analyzers (auto-adaptive, seasonal baseline) could not be used. Failures were detected using a **static threshold alert rule** configured within the Anomaly Detection app: `logs → DQL makeTimeseries → error_count > 0 per run_id → Davis event`
+- **Tradeoff**: Perfect F1 reflects alignment between ERROR presence and ground truth, not AI sophistication
 
 ### LogAI - Strong, Practical, Low-Overhead
 
-**Precision: 0.778 | Recall: 0.778 | F1: 0.778**
+**Precision: 0.875 | Recall: 0.700 | F1: 0.778**
 
-- Unsupervised clustering on raw logs (no training required)
+- Unsupervised anomaly detection: Drain log parsing → Word2Vec embeddings → IsolationForest
 - Lowest integration effort; works out-of-the-box
-- Best for quick analysis with minimal configuration
-- **Tradeoff**: Lower precision than Dynatrace; threshold tuning needed
+- Detected backend_test, dependency, and deploy failures; missed frontend_build
+- **Tradeoff**: 2 false positives; threshold selected post-hoc from score distribution
 
-### Elastic Observability - High Recall, Many False Positives
+### Elastic Observability - Detected Only Deploy Failures
 
-**Precision: 0.182 | Recall: 1.0 | F1: 0.182**
+**Precision: 1.000 | Recall: 0.100 | F1: 0.182**
 
-- Detects all failures but generates excessive false alerts
-- High integration complexity (ML feature setup)
-- **Best for**: Scenarios where strict recall is mandatory and FPs are acceptable cost
-- **Tradeoff**: Impractical false positive rate for small deployments; needs production-scale data
+- ML Anomaly Detection (time-series) found no anomalies due to insufficient temporal data
+- DFA outlier detection detected only 2/20 failures (both deploy class)
+- Deploy failures stood out due to unique feature profile (4 log files, errors + warnings)
+- **Tradeoff**: High integration complexity; DFA limited by feature expressiveness of Elasticsearch Transforms
 
 ## How It Works
 
@@ -218,7 +249,18 @@ See the per-tool evaluation documents for complete methodology, results, and ana
 
 ## Evaluation Constraints & Methodology
 
-### Constraints (from CLAUDE.md)
+### Technology Stack
+
+| Component | Technology |
+|---|---|
+| **Backend** | FastAPI (Python 3.11) |
+| **Frontend** | React 18 + TypeScript + Vite |
+| **Containerization** | Docker |
+| **Hosting** | Azure App Service for Containers |
+| **Container Registry** | Azure Container Registry |
+| **CI/CD** | GitHub Actions |
+
+### Constraints
 
 - **No custom ML implementations** - Tools evaluated as-provided by vendors
 - **No AI algorithm reimplementation** - Focus on integration and practical use
